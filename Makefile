@@ -1,3 +1,6 @@
+# CAUTION: This Makefile builds ONLY the tests.
+# To use this library, see ls_test.h or README.md.
+
 tests/tests: ls_queue.o tests/tests.c tests/ls_test.h
 	$(CC) -o $@ ls_queue.o tests/tests.c -Itests -I.
 

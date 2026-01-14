@@ -2,3 +2,4 @@ tests/tests
 .cache/
 ls_queue.o
 compile_commands.json
+coverage/

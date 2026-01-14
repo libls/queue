@@ -123,4 +123,92 @@ TEST_CASE(queue_circular_behavior) {
     return 0;
 }
 
+TEST_CASE(queue_push_pop_full_empty) {
+    int_queue q;
+    int val;
+    int_queue_init(&q);
+
+    // Fill queue
+    ASSERT_EQ(int_queue_push(&q, 1), 1, "%d");
+    ASSERT_EQ(int_queue_push(&q, 2), 1, "%d");
+    ASSERT_EQ(int_queue_push(&q, 3), 1, "%d");
+    ASSERT_EQ(int_queue_push(&q, 4), 1, "%d");
+    // Now full, next push should fail
+    ASSERT_EQ(int_queue_push(&q, 5), 0, "%d");
+
+    // Pop all
+    ASSERT_EQ(int_queue_pop(&q, &val), 1, "%d");
+    ASSERT_EQ(int_queue_pop(&q, &val), 1, "%d");
+    ASSERT_EQ(int_queue_pop(&q, &val), 1, "%d");
+    ASSERT_EQ(int_queue_pop(&q, &val), 1, "%d");
+    // Now empty, next pop should fail
+    ASSERT_EQ(int_queue_pop(&q, &val), 0, "%d");
+    return 0;
+}
+
+TEST_CASE(queue_wraparound_full_empty) {
+    int_queue q;
+    int val;
+    int_queue_init(&q);
+
+    // Fill and empty several times to force wraparound
+    for (int i = 0; i < 16; ++i) {
+        for (int j = 0; j < 4; ++j)
+            ASSERT_EQ(int_queue_push(&q, j), 1, "%d");
+        ASSERT_EQ(int_queue_push(&q, 99), 0, "%d"); // full
+        for (int j = 0; j < 4; ++j)
+            ASSERT_EQ(int_queue_pop(&q, &val), 1, "%d");
+        ASSERT_EQ(int_queue_pop(&q, &val), 0, "%d"); // empty
+    }
+    return 0;
+}
+
+/* Edge-case: fill, pop one, push one, fill again (write wraps, read not at 0) */
+TEST_CASE(queue_fill_wraparound_pointer_equality) {
+    int_queue q;
+    int val;
+    int_queue_init(&q);
+
+    // Fill queue
+    for (int i = 0; i < 4; ++i)
+        ASSERT_EQ(int_queue_push(&q, i), 1, "%d");
+    // Pop one
+    ASSERT_EQ(int_queue_pop(&q, &val), 1, "%d");
+    // Push one (write wraps to 0)
+    ASSERT_EQ(int_queue_push(&q, 42), 1, "%d");
+    // Fill again should fail (full)
+    ASSERT_EQ(int_queue_push(&q, 99), 0, "%d");
+    // Pop all, check order
+    for (int i = 1; i < 4; ++i) {
+        ASSERT_EQ(int_queue_pop(&q, &val), 1, "%d");
+        ASSERT_EQ(val, i, "%d");
+    }
+    ASSERT_EQ(int_queue_pop(&q, &val), 1, "%d");
+    ASSERT_EQ(val, 42, "%d");
+    // Now empty, next pop should fail
+    ASSERT_EQ(int_queue_pop(&q, &val), 0, "%d");
+    return 0;
+}
+
+/* Edge-case: pop all, push one, pop one, check pointers (read wraps to 0) */
+TEST_CASE(queue_empty_wraparound_pointer_equality) {
+    int_queue q;
+    int val;
+    int_queue_init(&q);
+
+    // Fill and empty queue
+    for (int i = 0; i < 4; ++i)
+        ASSERT_EQ(int_queue_push(&q, i), 1, "%d");
+    for (int i = 0; i < 4; ++i)
+        ASSERT_EQ(int_queue_pop(&q, &val), 1, "%d");
+    // Now empty, push one
+    ASSERT_EQ(int_queue_push(&q, 77), 1, "%d");
+    // Pop one, should be 77
+    ASSERT_EQ(int_queue_pop(&q, &val), 1, "%d");
+    ASSERT_EQ(val, 77, "%d");
+    // Now empty again, next pop should fail
+    ASSERT_EQ(int_queue_pop(&q, &val), 0, "%d");
+    return 0;
+}
+
 TEST_MAIN

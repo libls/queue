@@ -118,9 +118,10 @@
     /* Returns 0 if empty, 1 if successful. */                                 \
     int name##_pop(name* q, T* out);
 
-/* DO NOT USE. Use LS_QUEUE_TYPE_INLINE or LS_QUEUE_TYPE_{IMPL,DECL} instead.
+/* DO NOT USE THE MACRO BELOW. Use LS_QUEUE_TYPE_INLINE or
+ * LS_QUEUE_TYPE_{IMPL,DECL} instead.
  *
- * What follows is some ramblings about the implementation.
+ * What follows are some ramblings about the implementation.
  *
  * You might notice that the queue struct has two different names, once the
  * normal name, e.g. `int_queue`, and once a name with size, `struct
@@ -134,6 +135,11 @@
  * > In included file: typedef redefinition with different types ('struct
  *   int_queue_18' vs 'struct int_queue_16') (clang
  *   redefinition_different_typedef)
+ *
+ * Here you can see that the sizes differ in the declarations: one was declared
+ * with 16 elements, the other with 18. However, it's really ugly to use those,
+ * so the typedefs exist, and the functions are named without the size
+ * specifier, too.
  */
 #define _ls_QUEUE_TYPE_IMPL_DETAIL(T, name, cap, specifier)                    \
     specifier void name##_init(struct name##_##cap* q) {                       \
