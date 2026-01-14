@@ -13,17 +13,17 @@ Minimal, single-header ring-buffer queue for C.
 1. Copy `ls_queue.h` to your project.
 2. Define any number of queue types:
     ```c
-    LS_QUEUE_TYPE_INLINE(int, int_queue, 32)
+    LS_QUEUE_INLINE(int, int_queue, 32)
     ```
   
     **OR** for separate declaration/implementation:
   
     ```c
     // In header:
-    LS_QUEUE_TYPE_DECL(int, int_queue, 32)
+    LS_QUEUE_DECL(int, int_queue, 32)
 
     // In source file:
-    LS_QUEUE_TYPE_IMPL(int, int_queue, 32)
+    LS_QUEUE_IMPL(int, int_queue, 32)
     ```
 3. Use the queue with normal C function calls:
     ```c
