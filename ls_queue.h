@@ -3,7 +3,8 @@
 /* Lion's Standard (LS) type-safe ANSI C queue.
  *
  * Version: 2.1
- * Repo: https://github.com/lionkor/ls_queue
+ * Website: https://libls.org
+ * Repo: https://github.com/libls/queue
  * SPDX-License-Identifier: MIT
  *
  * ==== TABLE OF CONTENTS ====
@@ -71,7 +72,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2026 Lion Kortlepel <development@kortlepel.com>
+ * Copyright (c) 2026 Lion Kortlepel <libls@kortlepel.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
