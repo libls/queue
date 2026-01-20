@@ -1,9 +1,8 @@
-#pragma once
-
 /* Lion's Standard (LS) test harness.
  *
- * Version: 1.0
- * Repo: https://github.com/lionkor/ls_test
+ * Version: 1.1
+ * Website: https://libls.org
+ * Repo: https://github.com/libls/test
  * SPDX-License-Identifier: MIT
  *
  * ==== TABLE OF CONTENTS ====
@@ -54,7 +53,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2026 Lion Kortlepel <development@kortlepel.com>
+ * Copyright (c) 2026 Lion Kortlepel <libls@kortlepel.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
@@ -74,6 +73,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#pragma once
 
 #include <stdio.h>
 
@@ -278,6 +278,7 @@ static int ls_test_main(int argc, char** argv) {
 end:
     fprintf(stderr, "%d succeeded, %d failed, %d total\n", lst_ok, lst_fail,
         lst_ok + lst_fail);
+    free(lst_funcs);
 
     if (lst_fail > 0) {
         return 1;
