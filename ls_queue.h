@@ -2,7 +2,8 @@
  *
  * Version: 2.1
  * Website: https://libls.org
- * Repo: https://github.com/libls/queue
+ * GitHub: https://github.com/libls/queue
+ * Mirror: https://git.libls.org/queue.git
  * SPDX-License-Identifier: MIT
  *
  * ==== TABLE OF CONTENTS ====

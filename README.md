@@ -43,3 +43,9 @@ See [`ls_queue.h`](ls_queue.h) for detailed documentation and usage patterns.
 ## License
 
 MIT.
+
+## Links
+
+- [Website](https://libls.org)
+- [GitHub](https://github.com/libls/test.git)
+- [LibLS Git](https://git.libls.org/test.git)
